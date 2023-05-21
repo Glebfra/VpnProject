@@ -20,4 +20,4 @@ RUN apk --update add \
 
 RUN pip install -r requirements.txt
 
-CMD uwsgi --http :8000 --wsgi-file ./app/wsgi.py --enable-threads --virtualenv ./venv
+CMD uwsgi --http :8000 --wsgi-file ./app/wsgi.py --enable-threads
