@@ -18,6 +18,9 @@ RUN apk --update add \
         memcached \
         libmemcached-dev
 
+RUN apk add --virtual build-deps gcc python3-dev musl-dev\
+    && apk add --no-cache mariadb-dev
+
 RUN pip install -r requirements.txt
 
 CMD uwsgi --http :8000 --wsgi-file ./app/wsgi.py --enable-threads
