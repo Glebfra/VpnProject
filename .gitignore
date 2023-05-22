@@ -4,3 +4,5 @@ logs
 /app/static
 .idea/
 venv
+data
+venv
