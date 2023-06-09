@@ -42,7 +42,8 @@ services:
       NGINX_HOST: localhost
       NGINX_PORT: 80
     volumes:
-      - static_files:/etc/nginx/static
+      - static_files:/etc/nginx/back/static
+      - ./front/build:/etc/nginx/front
       - ./logs/nginx:/var/log/nginx
     ports:
       - "80:80"
