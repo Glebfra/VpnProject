@@ -1,41 +1,41 @@
 import React from "react";
-import axios from "axios";
-import {useNavigate} from "react-router";
+import axios from 'axios'
 
-class Login extends React.Component{
-
-    onSubmitHandle(event) {
-        event.preventDefault();
+class LoginForm extends React.Component {
+    handleClick(e) {
+        const form = e.target
         axios.post(
-            'login/',
+            '/login',
             {
-                email: event.target.email.value,
-                password: event.target.password.value
+                email: form.email.value,
+                password: form.password.value
             }
-        ).then(response => {
-            localStorage.setItem('token', response.data.token);
-        }).catch(reason => {
-            console.log(reason);
-        });
+        ).then(function (response) {
+            console.log(response)
+        })
+    }
+
+    onChange() {
+        console.log('Change')
     }
 
     render() {
         return (
-            <form onSubmit={this.onSubmitHandle} name='LoginForm'>
+            <form className='LoginForm' onSubmit={this.handleClick}>
                 <label>
-                    <b> Login: </b>
-                    <input type='text' name='email'/>
+                    <b> Email: </b>
+                    <input name='email'/>
                 </label><br/>
                 <label>
                     <b> Password: </b>
-                    <input type='password' name='password'/>
+                    <input name='password'/>
                 </label><br/>
+
                 <button type='submit'>
-                    <b> Submit </b>
+                    Отправить
                 </button>
             </form>
         );
     }
 }
-
-export default Login
+export default LoginForm

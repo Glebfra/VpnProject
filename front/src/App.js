@@ -1,12 +1,14 @@
 import './App.css';
-import Login from "./Modules/Auth/Login";
-import Main from "./Modules/Main/Main";
+import LoginForm from "./Modules/Auth/Login";
+import axios from "axios";
+
+axios.defaults.baseURL = 'http://localhost-api/api';
 
 function App() {
     if (localStorage.getItem('token') == null) {
         return (
-            <div className='App'>
-                <Login/>
+            <div className='app'>
+                <LoginForm/>
             </div>
         );
     } else {
