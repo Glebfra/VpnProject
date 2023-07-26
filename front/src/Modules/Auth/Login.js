@@ -1,9 +1,9 @@
 import React from "react";
 import axios from "axios";
-import Register from "./Register";
-import {redirect} from 'react-router'
+import {useNavigate} from "react-router";
 
 class Login extends React.Component{
+
     onSubmitHandle(event) {
         event.preventDefault();
         axios.post(
@@ -14,6 +14,8 @@ class Login extends React.Component{
             }
         ).then(response => {
             localStorage.setItem('token', response.data.token);
+        }).catch(reason => {
+            console.log(reason);
         });
     }
 
