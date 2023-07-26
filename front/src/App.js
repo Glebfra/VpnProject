@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import LoginForm from "./Modules/Auth/Login";
 import axios from "axios";
@@ -14,12 +13,11 @@ function App() {
         );
     } else {
         return (
-            <div className='app'>
-                <b> Main page </b> <br/>
+            <div className='App'>
+                <Main/>
             </div>
         );
     }
-
 }
 
 export default App;

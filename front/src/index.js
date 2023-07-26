@@ -5,8 +5,10 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {DevSupport} from "@react-buddy/ide-toolbox";
 import {ComponentPreviews, useInitial} from "./dev";
+import axios from "axios";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+axios.defaults.baseURL = 'http://localhost-api/api/'
 root.render(
     <React.StrictMode>
         <DevSupport ComponentPreviews={ComponentPreviews}
@@ -15,6 +17,7 @@ root.render(
             <App/>
         </DevSupport>
     </React.StrictMode>
+
 );
 
 // If you want to start measuring performance in your app, pass a function
