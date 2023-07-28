@@ -12,9 +12,6 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 class UserManager(BaseUserManager):
     def _create_user(self, email, password, **kwargs):
-        if not email:
-            raise ValueError('You must have email to register')
-
         user = self.model(email=email, **kwargs)
         user.set_password(password)
         user.save(using=self.db)

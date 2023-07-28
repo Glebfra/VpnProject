@@ -1,6 +1,7 @@
 import './App.css';
 import LoginForm from "./Modules/Auth/Login";
 import axios from "axios";
+import Main from "./Modules/Main/Main";
 
 axios.defaults.baseURL = 'http://localhost-api/api';
 

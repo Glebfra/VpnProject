@@ -1,39 +1,42 @@
-from django.contrib.auth.signals import user_logged_in
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import User
-from .serializers import UserSerializer
+from .serializers import RegistrationSerializer, LoginSerializer, UserSerializer
 
 
 class RegisterUserAPIView(APIView):
-    permission_classes = (AllowAny, )
+    permission_classes = (AllowAny,)
+    serializer_class = RegistrationSerializer
 
     def post(self, request):
         user = request.data
-        serializer = UserSerializer(data=user)
+        serializer = self.serializer_class(data=user)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
 
 
 class LoginUserAPIView(APIView):
-    permission_classes = (AllowAny, )
+    permission_classes = (AllowAny,)
+    serializer_class = LoginSerializer
 
     def post(self, request):
-        try:
-            user = User.objects.get(email=request.data['email'])
-            if user.check_password(request.data['password']):
-                user_logged_in.send(sender=user.__class__, request=request, user=user)
-                return Response({
-                    'name': user.username,
-                    'token': user.token
-                })
-            return Response({
-                'error': 'Пользователь не найден'
-            })
-        except:
-            return Response({
-                'error': 'Пользователь не найден'
-            })
+        data = request.data
+        serializer = self.serializer_class(data=data)
+        serializer.is_valid(raise_exception=True)
+        return Response(serializer.data)
+
+
+class UserAPIView(APIView):
+    permission_classes = (AllowAny,)
+    serializer_class = UserSerializer
+
+    def get(self, request):
+        data = {'token': request.headers.get('Authorization', None)}
+        serializer = self.serializer_class(data=data)
+        serializer.is_valid(raise_exception=True)
+        return Response(serializer.data)
+
+    def patch(self, request):
+        pass
