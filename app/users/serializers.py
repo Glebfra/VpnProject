@@ -1,11 +1,13 @@
 from rest_framework import serializers
 
-from .models import User
+from .models import User, UserManager
 
 
 class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
-        return User(**validated_data).save()
+        user = User(**validated_data)
+        user.set_password(validated_data['password'])
+        return user.save()
 
     def update(self, instance, validated_data):
         instance.email = validated_data.get('email', instance.email)
