@@ -1,3 +1,7 @@
+import os
+from datetime import datetime, timedelta
+
+import jwt
 from django.db import models
 from django.contrib.auth.models import (
     AbstractBaseUser, PermissionsMixin, BaseUserManager
@@ -6,9 +10,6 @@ from django.contrib.auth.models import (
 
 class UserManager(BaseUserManager):
     def _create_user(self, email, password, **kwargs):
-        if not email:
-            raise ValueError('You must have email to register')
-
         user = self.model(email=email, **kwargs)
         user.set_password(password)
         user.save(using=self.db)
