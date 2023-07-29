@@ -7,8 +7,6 @@ from django.contrib.auth.models import (
     AbstractBaseUser, PermissionsMixin, BaseUserManager
 )
 
-SECRET_KEY = os.getenv('SECRET_KEY')
-
 
 class UserManager(BaseUserManager):
     def _create_user(self, email, password, **kwargs):
@@ -27,10 +25,6 @@ class UserManager(BaseUserManager):
         kwargs.setdefault('is_superuser', True)
         return self._create_user(email, password, **kwargs)
 
-    def get_user_by_token(self, token: str):
-        user = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
-        return self.get(pk=user['id'])
-
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=40, unique=True)
@@ -48,18 +42,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     def save(self, *args, **kwargs):
         super(User, self).save(*args, **kwargs)
         return self
-
-    @property
-    def token(self):
-        return self._generate_jwt_token()
-
-    def _generate_jwt_token(self):
-        dt = datetime.now() + timedelta(days=1)
-        token = jwt.encode({
-            'id': self.pk,
-            'exp': int(dt.strftime('%s'))
-        }, SECRET_KEY, algorithm='HS256')
-        return token
 
     def __str__(self):
         return self.username
