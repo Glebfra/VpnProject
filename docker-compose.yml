@@ -50,8 +50,16 @@ services:
       - ./logs/nginx:/var/log/nginx
     ports:
       - "80:80"
+      - "443:443"
     depends_on:
       - django
+
+  front:
+    container_name: front
+    build: ./front
+    volumes:
+      - ./front:/etc/front
+
 
 volumes:
   static_files:
